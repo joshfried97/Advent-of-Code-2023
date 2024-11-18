@@ -30,7 +30,7 @@ int main()
         switch (choice)
         {
         case 1:
-            DayOne::Test();
+            DayOne::Main();
             break;
         case 2:
         case 3:
