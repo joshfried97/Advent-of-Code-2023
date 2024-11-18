@@ -2,6 +2,8 @@
 #include <iostream>
 #include <string>
 
+#include "Day1.h"
+
 using namespace std;
 
 int main()
@@ -28,7 +30,7 @@ int main()
         switch (choice)
         {
         case 1:
-            std::cout << "Your choice was " << choice << '\n';
+            DayOne::Test();
             break;
         case 2:
         case 3:
