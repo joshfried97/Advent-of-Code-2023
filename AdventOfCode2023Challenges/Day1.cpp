@@ -22,14 +22,12 @@ int DayOne::ParseNumber(const std::string& line_)
                 // Convert char to num with nice hack: https://sentry.io/answers/char-to-int-in-c-and-cpp/
                 tens = c - '0';
                 finVal += tens * pow(10, n--);
-                cout << "tens: " << tens << " finVal: " << finVal << endl;
             }
             else
             {
                 // Store subsequent numbers found as units, we'll use the last stored value for the units
                 units = c - '0';
                 n--;
-                cout << "units: " << units << " n: " << n << endl;
             }
         }
     }
