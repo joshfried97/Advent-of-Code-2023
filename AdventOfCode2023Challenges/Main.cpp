@@ -3,6 +3,7 @@
 #include <string>
 
 #include "Day1.h"
+#include "Day2.h"
 
 using namespace std;
 
@@ -33,6 +34,8 @@ int main()
             DayOne::Main();
             break;
         case 2:
+            DayTwo::Main();
+            break;
         case 3:
         case 4:
         case 5:
