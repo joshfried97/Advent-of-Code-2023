@@ -5,7 +5,7 @@
 
 namespace DayTwo
 {
-	int ParseGameInfo(const std::string& line_);
+	bool ParseGameInfo(const std::string& line_);
 
 	/// <summary>
 	/// Takes the filename and reads line by line
@@ -18,8 +18,4 @@ namespace DayTwo
 	/// Main function
 	/// </summary>
 	void Main();
-
-	/// @brief Using a hash map to store the game values as this can scale in runtime
-	/// Each element is ID, [maxRed, maxGreen, maxBlue]
-	//std::unordered_map<int, int[3]> cubesPerGame;
 }
