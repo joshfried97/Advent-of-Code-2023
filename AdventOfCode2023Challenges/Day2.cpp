@@ -13,10 +13,8 @@ using namespace std;
 #define MAX_GREEN 13
 #define MAX_BLUE 14
 
-bool DayTwo::ParseGameInfo(const std::string& line_)
+int DayTwo::ParseGameInfo(const std::string& line_)
 {
-    bool possible = false;
-
     std::istringstream iss(line_);
     std::string temp;
 
@@ -57,15 +55,8 @@ bool DayTwo::ParseGameInfo(const std::string& line_)
         }
     }
 
-    // This game is only possible if there isn't a round where there are more of a colour than the elf specified
-    if (maxValues[0] <= MAX_GREEN && maxValues[1] <= MAX_BLUE && maxValues[2] <= MAX_RED)
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
+    // Return the power of the minimum set of cubes
+    return maxValues[0] * maxValues[1] * maxValues[2];
 }
 
 int DayTwo::ReadFile(const std::string& filename_)
@@ -79,20 +70,10 @@ int DayTwo::ReadFile(const std::string& filename_)
     // Read and process each line one at a time
     std::string line;
     int total = 0;
-    int gameID = 1;
     while (std::getline(file, line)) {
         // Skip empty lines
         if (!line.empty()) {
-            if (ParseGameInfo(line))
-            {
-                total += gameID;
-                cout << line << " - Possible => Total = " << total << endl;
-            }
-            else
-            {
-                cout << line << " - Not possible" << endl;
-            }
-            gameID++;
+            total += ParseGameInfo(line);
         }
     }
 

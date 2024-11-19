@@ -5,7 +5,7 @@
 
 namespace DayTwo
 {
-	bool ParseGameInfo(const std::string& line_);
+	int ParseGameInfo(const std::string& line_);
 
 	/// <summary>
 	/// Takes the filename and reads line by line
