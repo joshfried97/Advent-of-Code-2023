@@ -1,4 +1,4 @@
-#include "Day1.h";
+#include "../Include/Day1.h"
 
 #include <iostream>
 #include <fstream>
@@ -94,7 +94,7 @@ void DayOne::Main()
 	cout << "Day 1 Challenge started.." << endl;
 
     try {
-        string filename = "DayOneTestInput.txt";
+        string filename = "TestInput/DayOneTestInput.txt";
         int total = ReadFile(filename);
         cout << "Sum of calibration values is: " << total << endl;
     }

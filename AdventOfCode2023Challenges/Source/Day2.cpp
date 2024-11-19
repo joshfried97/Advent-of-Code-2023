@@ -1,4 +1,4 @@
-#include "Day2.h";
+#include "../Include/Day2.h"
 
 #include <iostream>
 #include <fstream>
@@ -85,7 +85,7 @@ void DayTwo::Main()
     cout << "Day 2 Challenge started.." << endl;
 
     try {
-        string filename = "DayTwoTestInput.txt";
+        string filename = "TestInput/DayTwoTestInput.txt";
         int total = ReadFile(filename);
         cout << "Sum of ID values is: " << total << endl;
     }

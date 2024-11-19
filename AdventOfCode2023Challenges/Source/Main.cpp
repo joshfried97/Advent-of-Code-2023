@@ -2,8 +2,9 @@
 #include <iostream>
 #include <string>
 
-#include "Day1.h"
-#include "Day2.h"
+#include "../Include/Day1.h"
+#include "../Include/Day2.h"
+#include "../Include/Day3.h"
 
 using namespace std;
 
@@ -37,6 +38,8 @@ int main()
             DayTwo::Main();
             break;
         case 3:
+            DayThree::Main();
+            break;
         case 4:
         case 5:
         case 6:

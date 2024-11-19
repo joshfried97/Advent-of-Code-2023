@@ -15,21 +15,27 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp">
+    <ClCompile Include="Source\Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Day1.cpp">
+    <ClCompile Include="Source\Day1.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Day2.cpp">
+    <ClCompile Include="Source\Day2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Day3.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Day1.h">
+    <ClInclude Include="Include\Day1.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Day2.h">
+    <ClInclude Include="Include\Day2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Day3.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
