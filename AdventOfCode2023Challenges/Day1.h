@@ -1,10 +1,17 @@
 #pragma once
 
 #include <string>
+#include <vector>
 
 namespace DayOne
 {
-	int ParseNumber(const std::string& line_);
+	int WordToNumber(const std::string& word_);
+
+	std::vector<int> ExtractNumbers(const std::string& input_);
+
+	std::vector<int> ExtractNumbers(const std::string& line_);
+
+	int ConstructNumber(const std::string& line_);
 
 	/// <summary>
 	/// Takes the filename and reads line by line

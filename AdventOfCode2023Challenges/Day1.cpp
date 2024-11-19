@@ -4,46 +4,73 @@
 #include <fstream>
 #include <string>
 #include <cmath>
+#include <map>
 
-using namespace std;
+// Function to convert a word-number to its integer equivalent (limited to zero through nine)
+int DayOne::WordToNumber(const std::string& word_) {
+    static std::map<std::string, int> wordMap = {
+        {"zero", 0}, {"one", 1}, {"two", 2}, {"three", 3}, {"four", 4},
+        {"five", 5}, {"six", 6}, {"seven", 7}, {"eight", 8}, {"nine", 9}
+    };
 
-int DayOne::ParseNumber(const std::string& line_)
-{
-    // Initialise values
-    int n = 1;
-    int tens = 0;
-    int units = 0;
-    int finVal = 0;
 
-    for (char c : line_) {
-        if (std::isdigit(c)) {
-            if (n == 1)
+    std::map<std::string, int>::iterator it;
+    for (it = wordMap.begin(); it != wordMap.end(); it++)
+    {
+        if (word_.find(it->first) != std::string::npos)
+        {
+            // Once a successful hit has been made then return the numerical value
+            return it->second;
+        }
+    }
+
+    // If nothing found return -1
+    return -1;
+}
+
+// Helper function to extract single-digit numbers from a string
+std::vector<int> DayOne::ExtractNumbers(const std::string& input_) {
+    std::vector<int> numbers;
+    std::string temp;
+
+    for (size_t i = 0; i < input_.size(); ++i) {
+        // Store number
+        if (std::isdigit(input_[i]) && input_[i] >= '0' && input_[i] <= '9') {
+            numbers.push_back(input_[i] - '0'); // Convert single-digit char to int
+            continue;
+        }
+        else if (std::isalpha(input_[i])) {
+            // Build strings char by char
+            temp.push_back(input_[i]);
+        } 
+        
+        if (!temp.empty()) {
+            // Process the temporary string
+            int num = WordToNumber(temp); // Convert word to number
+            if (num != -1)
             {
-                // Convert char to num with nice hack: https://sentry.io/answers/char-to-int-in-c-and-cpp/
-                tens = c - '0';
-                finVal += tens * pow(10, n--);
-            }
-            else
-            {
-                // Store subsequent numbers found as units, we'll use the last stored value for the units
-                units = c - '0';
-                n--;
+                // Add number to the vector
+                numbers.push_back(num);
+
+                // Only clear the built string when a number is found
+                temp.clear();
             }
         }
     }
 
-    if (n > -1)
-    {
-        // This is the case if there is only one number in the string
-        finVal += tens;
+    // Process any leftover string
+    if (!temp.empty()) {
+        int num = WordToNumber(temp);
+        if (num != -1) numbers.push_back(num);
     }
-    else
-    {
-        // Use the last stored units value
-        finVal += units;
-    }
-    
-    return finVal;
+
+    return numbers;
+}
+
+int DayOne::ConstructNumber(const std::string& line_)
+{
+    std::vector<int> numbers = ExtractNumbers(line_);
+    return numbers.front() * 10 + numbers.back();
 }
 
 int DayOne::ReadFile(const std::string& filename_)
@@ -70,7 +97,7 @@ int DayOne::ReadFile(const std::string& filename_)
             }
 
             // Call the function to return the value hidden in the string
-            int val = ParseNumber(line);
+            int val = ConstructNumber(line);
 
             if (valid) {
                 std::cout << "Valid alphanumeric line: " << line << ". Numerical value: " << val << "\n";
@@ -91,16 +118,16 @@ int DayOne::ReadFile(const std::string& filename_)
 
 void DayOne::Main()
 {
-	cout << "Day 1 Challenge started.." << endl;
+	std::cout << "Day 1 Challenge started.." << std::endl;
 
     try {
-        string filename = "DayOneTestInput.txt";
+        std::string filename = "DayOneTestInput.txt";
         int total = ReadFile(filename);
-        cout << "Sum of calibration values is: " << total << endl;
+        std::cout << "Sum of calibration values is: " << total << std::endl;
     }
     catch (const std::exception& e) {
-        cerr << "Error: " << e.what() << "\n";
+        std::cerr << "Error: " << e.what() << "\n";
     }
 
-    cout << "Day 1 Challenge finished.." << endl;
+    std::cout << "Day 1 Challenge finished.." << std::endl;
 }
