@@ -55,7 +55,9 @@ int DayThree::ReadFile(const std::string& filename_)
     }
 
     // Read and process each line one at a time
+    std::vector<std::vector<std::string>> schematicContents;
     std::string line;
+    int rowLength;
     int total = 0;
     while (std::getline(file, line)) {
         // Skip empty lines
@@ -63,10 +65,7 @@ int DayThree::ReadFile(const std::string& filename_)
             // Ensure each line contains a valid string
             bool valid = true;
             for (char c : line) {
-                if (!std::isalnum(c)) {
-                    valid = false;
-                    break;
-                }
+                
             }
 
             // Call the function to return the value hidden in the string
@@ -96,7 +95,7 @@ void DayThree::Main()
     try {
         string filename = "TestInput/DayThreeTestInput.txt";
         int total = ReadFile(filename);
-        cout << "Sum of calibration values is: " << total << endl;
+        cout << "Sum of numerical values in engine schematic is: " << total << endl;
     }
     catch (const std::exception& e) {
         cerr << "Error: " << e.what() << "\n";
