@@ -5,7 +5,7 @@
 
 namespace DayThree
 {
-	int ParseNumber(const std::string& line_);
+	int FindAdjSymbol(const std::vector<std::vector<char>> &schContents_);
 
 	/// <summary>
 	/// Takes the filename and reads line by line
