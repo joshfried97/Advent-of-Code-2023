@@ -5,46 +5,6 @@
 #include <string>
 #include <cmath>
 
-using namespace std;
-
-int DayThree::ParseNumber(const std::string& line_)
-{
-    // Initialise values
-    int n = 1;
-    int tens = 0;
-    int units = 0;
-    int finVal = 0;
-
-    for (char c : line_) {
-        if (std::isdigit(c)) {
-            if (n == 1)
-            {
-                // Convert char to num with nice hack: https://sentry.io/answers/char-to-int-in-c-and-cpp/
-                tens = c - '0';
-                finVal += tens * pow(10, n--);
-            }
-            else
-            {
-                // Store subsequent numbers found as units, we'll use the last stored value for the units
-                units = c - '0';
-                n--;
-            }
-        }
-    }
-
-    if (n > -1)
-    {
-        // This is the case if there is only one number in the string
-        finVal += tens;
-    }
-    else
-    {
-        // Use the last stored units value
-        finVal += units;
-    }
-
-    return finVal;
-}
 
 int DayThree::ReadFile(const std::string& filename_)
 {
@@ -55,30 +15,34 @@ int DayThree::ReadFile(const std::string& filename_)
     }
 
     // Read and process each line one at a time
-    std::vector<std::vector<std::string>> schematicContents;
+    std::vector<std::vector<char>> schematicContents;
     std::string line;
-    int rowLength;
+    int itr = 0;
     int total = 0;
     while (std::getline(file, line)) {
         // Skip empty lines
         if (!line.empty()) {
-            // Ensure each line contains a valid string
-            bool valid = true;
+            // Add new row to vector
+            schematicContents.resize(schematicContents.size() + 1);
+
+            // Add column entries to the new row as we know the line length and populate
+            schematicContents[itr].resize(line.size());
+
             for (char c : line) {
-                
+                schematicContents[itr].push_back(c);
             }
-
-            // Call the function to return the value hidden in the string
-            int val = ParseNumber(line);
-
-            if (valid) {
-                std::cout << "Valid alphanumeric line: " << line << ". Numerical value: " << val << "\n";
-                total += val;
-            }
-            else {
-                std::cout << "Invalid line (contains non-alphanumeric characters): " << line << "\n";
-            }
+            
         }
+        itr++;
+    }
+
+    for (int i = 0; i < schematicContents.size(); i++)
+    {
+        for (int j = 0; j < schematicContents[i].size(); j++)
+        {
+            std::cout << schematicContents[i][j];
+        }
+        std::cout << std::endl;
     }
 
     // Close the file
@@ -90,16 +54,16 @@ int DayThree::ReadFile(const std::string& filename_)
 
 void DayThree::Main()
 {
-    cout << "Day 3 Challenge started.." << endl;
+    std::cout << "Day 3 Challenge started.." << std::endl;
 
     try {
-        string filename = "TestInput/DayThreeTestInput.txt";
+        std::string filename = "TestInput/DayThreeTestInput.txt";
         int total = ReadFile(filename);
-        cout << "Sum of numerical values in engine schematic is: " << total << endl;
+        std::cout << "Sum of numerical values in engine schematic is: " << total << std::endl;
     }
     catch (const std::exception& e) {
-        cerr << "Error: " << e.what() << "\n";
+        std::cerr << "Error: " << e.what() << "\n";
     }
 
-    cout << "Day 3 Challenge finished.." << endl;
+    std::cout << "Day 3 Challenge finished.." << std::endl;
 }
