@@ -6,7 +6,7 @@
 namespace DayThree
 {
 	bool SymbolNeigh(const std::vector<std::vector<char>>& schContents_, 
-		const int startRow_, const int startCol_, const int digitLen_);
+		const int startRow_, const int startCol_, const int digitLen_, const int rowNum_);
 	
 	int FindAdjSymbol(const std::vector<std::vector<char>> &schContents_);
 

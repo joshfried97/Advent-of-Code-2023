@@ -5,19 +5,41 @@
 #include <string>
 #include <cmath>
 
-bool DayThree::SymbolNeigh(const std::vector<std::vector<char>>& schContents_,
-    const int startRow_, const int startCol_, const int digitLen_)
+bool DayThree::SymbolNeigh(const std::vector<std::vector<char>>& schContents_, const int startRow_, const int startCol_, const int digitLen_,
+    const int rowNum_)
 {
-    
+    for (int i = startRow_ - 1; i <= startRow_ + 1; i++)
+    {
+        if (i < 0 || i > rowNum_ - 1)
+        {
+            // Skip this row if it lies outside structure size
+            continue;
+        }
+
+        for (int j = startCol_ - 1; j <= startCol_ + digitLen_ + 1; j++)
+        {
+            int rowLen = schContents_[i].size();
+            if (j < 0 || j > rowLen - 1)
+            {
+                // Skip this element if it lies outside structure size
+                continue;
+            }
+
+            char query = schContents_[i][j];
+            if (!isdigit(query) && query != '.')
+            {
+                return true;
+            }
+        }
+    }
 
     return false;
 }
 
 int DayThree::FindAdjSymbol(const std::vector<std::vector<char>>& schContents_)
 {
-    int digitCtr = 0;
-    int startR, startC;
-    startR = startC = 0;
+    int digitCtr, total, startR, startC;
+    digitCtr = total = startR = startC = 0;
     for (int i = 0; i < schContents_.size(); i++)
     {
         int num = 0;
@@ -31,7 +53,6 @@ int DayThree::FindAdjSymbol(const std::vector<std::vector<char>>& schContents_)
                 {
                     startR = i;
                     startC = j;
-                    std::cout << "Coord of first digit is " << startR << "," << startC << std::endl;
                 }
 
                 // Build the number as we find new digits
@@ -43,15 +64,24 @@ int DayThree::FindAdjSymbol(const std::vector<std::vector<char>>& schContents_)
                 // At this point we have found the symbol after the last digit so have the full number
                 if (num > 0)
                 {
-                    std::cout << num << std::endl;
+                    if (SymbolNeigh(schContents_, startR, startC, digitCtr, schContents_[i].size()))
+                    {
+                        total += num;
+                    }
+                    else
+                    {
+                        std::cout << num << std::endl;
+                    }
                 }
+                
+                // Reset values ahead of the next incoming number
                 num = 0;
                 digitCtr = 0;
             }
         }
     }
 
-    return 0;
+    return total;
 }
 
 int DayThree::ReadFile(const std::string& filename_)
