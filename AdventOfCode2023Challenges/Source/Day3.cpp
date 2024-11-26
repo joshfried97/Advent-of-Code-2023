@@ -5,9 +5,19 @@
 #include <string>
 #include <cmath>
 
+bool DayThree::SymbolNeigh(const std::vector<std::vector<char>>& schContents_,
+    const int startRow_, const int startCol_, const int digitLen_)
+{
+    
+
+    return false;
+}
+
 int DayThree::FindAdjSymbol(const std::vector<std::vector<char>>& schContents_)
 {
     int digitCtr = 0;
+    int startR, startC;
+    startR = startC = 0;
     for (int i = 0; i < schContents_.size(); i++)
     {
         int num = 0;
@@ -16,15 +26,27 @@ int DayThree::FindAdjSymbol(const std::vector<std::vector<char>>& schContents_)
             const char c = schContents_[i][j];
             if (isdigit(c))
             {
+                // Store coords of first digit
+                if (!digitCtr)
+                {
+                    startR = i;
+                    startC = j;
+                    std::cout << "Coord of first digit is " << startR << "," << startC << std::endl;
+                }
+
+                // Build the number as we find new digits
                 num = num * 10 + (c - '0');
+                digitCtr++;
             }
             else
             {
+                // At this point we have found the symbol after the last digit so have the full number
                 if (num > 0)
                 {
                     std::cout << num << std::endl;
                 }
                 num = 0;
+                digitCtr = 0;
             }
         }
     }
@@ -59,6 +81,12 @@ int DayThree::ReadFile(const std::string& filename_)
             
         }
         itr++;
+    }
+
+    // Remove leading 10 null characters - ** Might not be needed for test case
+    for (size_t i = 0; i < schematicContents.size(); i++)
+    {
+        schematicContents[i].erase(schematicContents[i].begin(), schematicContents[i].begin() + 10);
     }
 
     // Close the file
