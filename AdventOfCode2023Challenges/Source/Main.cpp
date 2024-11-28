@@ -5,6 +5,7 @@
 #include "../Include/Day1.h"
 #include "../Include/Day2.h"
 #include "../Include/Day3.h"
+#include "../Include/Day4.h"
 
 using namespace std;
 
@@ -41,6 +42,8 @@ int main()
             DayThree::Main();
             break;
         case 4:
+            DayFour::Main();
+            break;
         case 5:
         case 6:
         case 7:
