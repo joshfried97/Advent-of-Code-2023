@@ -33,10 +33,8 @@ int DayFour::ReadFile(const std::string& filename_)
     }
 
     // Build the vector of data first
-    std::vector<std::vector<int>> winNums, drawnNums;
+    std::vector<int> winNums, drawnNums, scoresPerCard;
     std::string line;
-    int total, cardNum;
-    total = cardNum = 0;
     while (std::getline(file, line)) {
         // Skip empty lines
         if (!line.empty()) {
@@ -48,35 +46,59 @@ int DayFour::ReadFile(const std::string& filename_)
             pos = line.find("|");
             std::string winStr = line.substr(0, pos);
             std::string drawnStr = line.substr(pos + 1, line.length());
-
-            // Rescale the vectors
-            winNums.resize(winNums.size() + 1);
-            drawnNums.resize(drawnNums.size() + 1);
             
             // Parse winning numbers string
             std::stringstream issW(winStr);
             int num;
             while (issW >> num)
             {
-                winNums[cardNum].push_back(num);
+                winNums.push_back(num);
             }
 
             // Parse drawn numbers string
             std::stringstream issD(drawnStr);
             while (issD >> num)
             {
-                drawnNums[cardNum].push_back(num);
+                drawnNums.push_back(num);
             }
 
-            cardNum++;
+            // Build the scores per card look up table
+            scoresPerCard.push_back(FindPairs(winNums, drawnNums));
         }
+        winNums.clear();
+        drawnNums.clear();
     }
 
     // Close the file
     file.close();
 
+    int scoreCardNum, itr, tempNum;
+    scoreCardNum = itr = tempNum = 0;
+    std::vector<int> cardBuffer;
+
+    // Initially fill buffer
+    for (size_t i = 1; i <= scoresPerCard.size(); i++)
+    {
+        tempNum = scoresPerCard[i-1];
+        for (size_t j = 1; j <= tempNum; j++)
+        {
+            cardBuffer.push_back(i + j);
+        }
+    }
+
+
+    do
+    {
+        tempNum = scoresPerCard[itr];
+        if (true)
+        {
+
+        }
+
+    } while (!cardBuffer.empty());
+
     // Return the final value
-    return total;
+    return 0;
 }
 
 void DayFour::Main()
