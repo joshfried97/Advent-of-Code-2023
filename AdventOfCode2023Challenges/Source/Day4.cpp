@@ -5,26 +5,27 @@
 #include <string>
 #include <sstream>
 #include <cmath>
+#include <algorithm>
+#include <vector>
 
 int DayFour::ReadCard(const std::vector<int>& winningNumbers_, const std::vector<int>& drawnNumbers_)
 {
     int total = 0;
 
-    std::cout << "Winning Numbers :";
-    for (size_t i = 0; i < winningNumbers_.size(); i++)
-    {
-        std::cout << winningNumbers_[i] << " ";
-    }
-
-    std::cout << std::endl;
-
-    std::cout << "Drawn Numbers :";
     for (size_t i = 0; i < drawnNumbers_.size(); i++)
     {
-        std::cout << drawnNumbers_[i] << " ";
+        if (std::find(winningNumbers_.begin(), winningNumbers_.end(), drawnNumbers_[i]) != winningNumbers_.end())
+        {
+            if (!total)
+            {
+                total = 1;
+            }
+            else
+            {
+                total *= 2;
+            }
+        }
     }
-
-    std::cout << std::endl;
 
     return total;
 }
@@ -41,6 +42,7 @@ int DayFour::ReadFile(const std::string& filename_)
     std::vector<int> winNums, drawnNums;
     std::string line;
     int total = 0;
+    int cardNum = 1;
     while (std::getline(file, line)) {
         // Skip empty lines
         if (!line.empty()) {
@@ -69,7 +71,9 @@ int DayFour::ReadFile(const std::string& filename_)
             }
 
             // Read card values and return card score
-            total += ReadCard(winNums, drawnNums);
+            int cardTotal = ReadCard(winNums, drawnNums);
+            total += cardTotal;
+            std::cout << "Card #" << cardNum++ << " total: " << cardTotal << std::endl;
         }
 
         // Clear the vectors ahead of the next line
@@ -91,7 +95,7 @@ void DayFour::Main()
     try {
         std::string filename = "TestInput/DayFourTestInput.txt";
         int total = ReadFile(filename);
-        std::cout << "Sum of numerical values in engine schematic is: " << total << std::endl;
+        std::cout << "Total score for all the cards: " << total << std::endl;
     }
     catch (const std::exception& e) {
         std::cerr << "Error: " << e.what() << "\n";
