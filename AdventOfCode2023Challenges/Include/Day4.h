@@ -5,7 +5,7 @@
 
 namespace DayFour
 {
-	int ReadCard(const std::vector<int>& winningNumbers_, const std::vector<int>& drawnNumbers_);
+	int FindPairs(const std::vector<int>& winningNumbers_, const std::vector<int>& drawnNumbers_);
 
 	/// <summary>
 	/// Takes the filename and reads line by line

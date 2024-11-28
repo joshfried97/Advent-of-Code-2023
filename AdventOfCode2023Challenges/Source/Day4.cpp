@@ -8,26 +8,20 @@
 #include <algorithm>
 #include <vector>
 
-int DayFour::ReadCard(const std::vector<int>& winningNumbers_, const std::vector<int>& drawnNumbers_)
+int DayFour::FindPairs(const std::vector<int>& winningNumbers_, const std::vector<int>& drawnNumbers_)
 {
-    int total = 0;
+    int numPairs = 0;
 
+    // Loop through all drawn numbers to search for them in the winning pile
     for (size_t i = 0; i < drawnNumbers_.size(); i++)
     {
         if (std::find(winningNumbers_.begin(), winningNumbers_.end(), drawnNumbers_[i]) != winningNumbers_.end())
         {
-            if (!total)
-            {
-                total = 1;
-            }
-            else
-            {
-                total *= 2;
-            }
+            numPairs++;
         }
     }
 
-    return total;
+    return numPairs;
 }
 
 int DayFour::ReadFile(const std::string& filename_)
@@ -39,10 +33,10 @@ int DayFour::ReadFile(const std::string& filename_)
     }
 
     // Build the vector of data first
-    std::vector<int> winNums, drawnNums;
+    std::vector<std::vector<int>> winNums, drawnNums;
     std::string line;
-    int total = 0;
-    int cardNum = 1;
+    int total, cardNum;
+    total = cardNum = 0;
     while (std::getline(file, line)) {
         // Skip empty lines
         if (!line.empty()) {
@@ -54,31 +48,28 @@ int DayFour::ReadFile(const std::string& filename_)
             pos = line.find("|");
             std::string winStr = line.substr(0, pos);
             std::string drawnStr = line.substr(pos + 1, line.length());
+
+            // Rescale the vectors
+            winNums.resize(winNums.size() + 1);
+            drawnNums.resize(drawnNums.size() + 1);
             
             // Parse winning numbers string
             std::stringstream issW(winStr);
             int num;
             while (issW >> num)
             {
-                winNums.push_back(num);
+                winNums[cardNum].push_back(num);
             }
 
             // Parse drawn numbers string
             std::stringstream issD(drawnStr);
             while (issD >> num)
             {
-                drawnNums.push_back(num);
+                drawnNums[cardNum].push_back(num);
             }
 
-            // Read card values and return card score
-            int cardTotal = ReadCard(winNums, drawnNums);
-            total += cardTotal;
-            std::cout << "Card #" << cardNum++ << " total: " << cardTotal << std::endl;
+            cardNum++;
         }
-
-        // Clear the vectors ahead of the next line
-        winNums.clear();
-        drawnNums.clear();
     }
 
     // Close the file
