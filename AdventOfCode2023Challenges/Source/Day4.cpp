@@ -72,33 +72,56 @@ int DayFour::ReadFile(const std::string& filename_)
     // Close the file
     file.close();
 
-    int scoreCardNum, itr, tempNum;
-    scoreCardNum = itr = tempNum = 0;
+    int scoreCardNum, itr, tempCardNum, tempPairNum;
+    scoreCardNum = itr = tempCardNum = tempPairNum = 0;
     std::vector<int> cardBuffer;
 
     // Initially fill buffer
+    std::cout << "Round 1:" << std::endl;
     for (size_t i = 1; i <= scoresPerCard.size(); i++)
     {
-        tempNum = scoresPerCard[i-1];
-        for (size_t j = 1; j <= tempNum; j++)
+        // Add original cards
+        cardBuffer.push_back(i);
+        std::cout << i << ": ";
+
+        // Find the score for these original cards
+        tempPairNum = scoresPerCard[i-1];
+        if (!tempPairNum)
         {
-            cardBuffer.push_back(i + j);
+            std::cout << std::endl;
+            continue;
         }
+
+        for (size_t j = 1; j <= tempPairNum; j++)
+        {
+            // Add first layer of card results
+            cardBuffer.push_back(i + j);
+            std::cout << i + j << " ";
+        }
+        std::cout << std::endl;
     }
 
-
-    do
+    // Now continue to fill the buffer with the subsequent card results
+    for (size_t i = scoresPerCard.size(); i < cardBuffer.size(); i++)
     {
-        tempNum = scoresPerCard[itr];
-        if (true)
-        {
+        tempCardNum = cardBuffer[i];
+        tempPairNum = scoresPerCard[tempCardNum];
 
+        if (!tempPairNum)
+        {
+            continue;
         }
 
-    } while (!cardBuffer.empty());
+        for (size_t j = 1; j <= tempPairNum; j++)
+        {
+            std::cout << i << " " << j;
+            cardBuffer.push_back(cardBuffer[i] + j);
+        }
+        std::cout << std::endl;
+    }
 
     // Return the final value
-    return 0;
+    return cardBuffer.size();
 }
 
 void DayFour::Main()
