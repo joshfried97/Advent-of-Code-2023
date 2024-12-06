@@ -16,7 +16,9 @@ bool DayThree::SymbolNeigh(const std::vector<std::vector<char>>& schContents_, c
             continue;
         }
 
-        for (int j = startCol_ - 1; j <= startCol_ + digitLen_ + 1; j++)
+        int start = startCol_ - 1;
+        int end = start + digitLen_;
+        for (int j = start; j <= end + 1; j++)
         {
             int rowLen = schContents_[i].size();
             if (j < 0 || j > rowLen - 1)
@@ -26,6 +28,7 @@ bool DayThree::SymbolNeigh(const std::vector<std::vector<char>>& schContents_, c
             }
 
             char query = schContents_[i][j];
+            //std::cout << "i = " << i << " j = " << j << " char = " << query << std::endl;
             if (!isdigit(query) && query != '.')
             {
                 return true;
@@ -70,7 +73,7 @@ int DayThree::FindAdjSymbol(const std::vector<std::vector<char>>& schContents_)
                     }
                     else
                     {
-                        std::cout << num << std::endl;
+                        std::cout << "Row " << i << " : " << num << std::endl;
                     }
                 }
                 
@@ -113,10 +116,10 @@ int DayThree::ReadFile(const std::string& filename_)
         itr++;
     }
 
-    // Remove leading 10 null characters - ** Might not be needed for test case
+    // Remove leading null characters which half the row length
     for (size_t i = 0; i < schematicContents.size(); i++)
     {
-        schematicContents[i].erase(schematicContents[i].begin(), schematicContents[i].begin() + 10);
+        schematicContents[i].erase(schematicContents[i].begin(), schematicContents[i].begin() + (schematicContents[i].size()/2));
     }
 
     // Close the file
