@@ -62,9 +62,10 @@ int DayThree::FindAdjSymbol(const std::vector<std::vector<char>>& schContents_)
                 num = num * 10 + (c - '0');
                 digitCtr++;
             }
-            else
+            
+            if (!isdigit(c) || j == schContents_[i].size() - 1)
             {
-                // At this point we have found the symbol after the last digit so have the full number
+                // At this point we have found the symbol after the last digit or at the end of the row so have the full number
                 if (num > 0)
                 {
                     if (SymbolNeigh(schContents_, startR, startC, digitCtr, schContents_[i].size()))
