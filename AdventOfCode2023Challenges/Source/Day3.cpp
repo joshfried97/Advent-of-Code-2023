@@ -5,6 +5,8 @@
 #include <string>
 #include <cmath>
 
+// PART 1 FUNCTIONS
+
 bool DayThree::SymbolNeigh(const std::vector<std::vector<char>>& schContents_, const int startRow_, const int startCol_, const int digitLen_,
     const int rowNum_)
 {
@@ -88,6 +90,8 @@ int DayThree::FindAdjSymbol(const std::vector<std::vector<char>>& schContents_)
     return total;
 }
 
+// PART 2 FUNCTIONS
+
 int DayThree::ReadFile(const std::string& filename_)
 {
     // Open the file
@@ -126,7 +130,21 @@ int DayThree::ReadFile(const std::string& filename_)
     // Close the file
     file.close();
 
-    int total = FindAdjSymbol(schematicContents);
+    // Choose between Part 1 or 2
+    int choice = 0;
+    std::cout << "Part 1 or 2: ";
+    std::cin >> choice;
+
+    int total = 0;
+    if (choice == 1)
+    {
+        std::cout << "Part 1 starting.." << std::endl;
+        total = FindAdjSymbol(schematicContents);
+    }
+    else if (choice == 2)
+    {
+        std::cout << "Part 2 starting.." << std::endl;
+    }
 
     // Return the final value
     return total;

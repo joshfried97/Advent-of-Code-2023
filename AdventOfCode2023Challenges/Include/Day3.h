@@ -5,10 +5,16 @@
 
 namespace DayThree
 {
+	// PART 1 FUNCTIONS
+
 	bool SymbolNeigh(const std::vector<std::vector<char>>& schContents_, 
 		const int startRow_, const int startCol_, const int digitLen_, const int rowNum_);
 	
 	int FindAdjSymbol(const std::vector<std::vector<char>> &schContents_);
+
+	// PART 2 FUNCTIONS
+
+
 
 	/// <summary>
 	/// Takes the filename and reads line by line
